@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TrackerUAJ
+namespace TrackerUAJ.Events
 {
-    public interface IPersistence
+    class EndGameEvent
     {
-        void Send();
-        void Flush();
     }
 }

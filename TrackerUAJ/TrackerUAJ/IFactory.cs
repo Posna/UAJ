@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace TrackerUAJ
 {
-    public interface IPersistence
+    public interface IFactory<T>
     {
-        void Send();
-        void Flush();
+       T create(string name);
     }
 }

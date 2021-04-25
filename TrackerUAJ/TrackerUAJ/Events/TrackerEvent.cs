@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace TrackerUAJ
 {
+    [Serializable]
     public class TrackerEvent
     {
         /*Atributos*/
-        DateTime date;
-        int idGame;
-        int idSession;
-        int idUser;
-        public virtual string toCSV() {return null; }
+
+        public DateTime date { get; set; }
+        public int idGame { get; set; }
+        public int idSession { get; set; }
+        public int idUser { get; set; }
+
+        public virtual string toCSV() { return null; }
         public virtual string toJson() { return null; }
     }
 }

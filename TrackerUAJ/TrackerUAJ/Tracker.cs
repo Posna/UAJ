@@ -12,11 +12,14 @@ namespace TrackerUAJ
         private static Tracker _instance;
         private IPersistence _persistance;
 
+        EventFactory _factory;
+
         Queue<TrackerEvent> eventQueue;
         public void Init(IPersistence per)
         {
             _persistance = per;
         }
+
         public static Tracker GetInstance()
         {
             if (_instance == null)
@@ -29,7 +32,17 @@ namespace TrackerUAJ
 
         public void trackEvent(TrackerEvent e)
         {
-            eventQueue.Enqueue(e);
+            eventQueue.Enqueue(getEndGame());
+        }
+
+        public EndGameEvent getEndGame()
+        {
+            return (EndGameEvent)_factory.create("end");
+        }
+
+        void bachata()
+        {
+            trackEvent(_instance.getEndGame()
         }
 
 
