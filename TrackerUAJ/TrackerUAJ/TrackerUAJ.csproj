@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\EndGameEvent.cs" />
+    <Compile Include="Events\Event2.cs" />
+    <Compile Include="Events\IEndGameEvent.cs" />
+    <Compile Include="Events\IEvent2.cs" />
     <Compile Include="Factories\EventFactory.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="Persistence\IPersistence.cs" />

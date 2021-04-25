@@ -29,20 +29,29 @@ namespace TrackerUAJ
             return _instance;
         }
 
-
+        //Ejemplo:
+        //_instance.trackEvent(_instance.getEvent("EndGameEvent").SetDamage(2).SetLevel("Nivel 2"));
         public void trackEvent(TrackerEvent e)
         {
-            eventQueue.Enqueue(getEndGame());
+            eventQueue.Enqueue(e);
+        }
+
+        public TrackerEvent getEvent(string nameEvent)
+        {
+            switch (nameEvent)
+            {
+                case "EndGameEvent":
+                    return new EndGameEvent();
+                case "Event2":
+                    return new Event2();
+                default:
+                    return new TrackerEvent();                    
+            }
         }
 
         public EndGameEvent getEndGame()
         {
             return (EndGameEvent)_factory.create("end");
-        }
-
-        void bachata()
-        {
-            trackEvent(_instance.getEndGame()
         }
 
 

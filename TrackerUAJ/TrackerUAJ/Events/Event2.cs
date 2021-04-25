@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace TrackerUAJ
 {
-    public class EndGameEvent : TrackerEvent
+    class Event2: TrackerEvent
     {
-        public override string toCSV() {
+        public override string toCSV()
+        {
             int a = 0;
-            a += 3;
+            a += 1;
             return null;
         }
         public override string toJson() { return null; }
