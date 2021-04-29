@@ -8,15 +8,19 @@ namespace TrackerUAJ
 {
     public class Tracker
     {
-        private Tracker() { }
+        private Tracker()  { }
         private static Tracker _instance;
         private IPersistence _persistance;
 
         EventFactory _factory;
 
         Queue<TrackerEvent> eventQueue;
-        public void Init(IPersistence per)
+
+        // Valores iniciales
+        int _idUser;
+        public void Init(IPersistence per, int idUser)
         {
+            _idUser = idUser;
             _persistance = per;
         }
 
@@ -33,25 +37,18 @@ namespace TrackerUAJ
         //_instance.trackEvent(_instance.getEvent("EndGameEvent").SetDamage(2).SetLevel("Nivel 2"));
         public void trackEvent(TrackerEvent e)
         {
+            e.date = DateTime.Now;
             eventQueue.Enqueue(e);
-        }
-
-        public TrackerEvent getEvent(string nameEvent)
-        {
-            switch (nameEvent)
-            {
-                case "EndGameEvent":
-                    return new EndGameEvent();
-                case "Event2":
-                    return new Event2();
-                default:
-                    return new TrackerEvent();                    
-            }
         }
 
         public EndGameEvent getEndGame()
         {
-            return (EndGameEvent)_factory.create("end");
+            return (EndGameEvent)_factory.create("EndEvent");
+        }
+
+        public CharacterSelectionEvent getCharacterSelectorEvent()
+        {
+            return (CharacterSelectionEvent)_factory.create("CharacterEvent");
         }
 
 

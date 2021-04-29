@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,9 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\EndGameEvent.cs" />
-    <Compile Include="Events\Event2.cs" />
-    <Compile Include="Events\IEndGameEvent.cs" />
-    <Compile Include="Events\IEvent2.cs" />
+    <Compile Include="Events\CharacterSelectionEvent.cs" />
     <Compile Include="Factories\EventFactory.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="Persistence\IPersistence.cs" />

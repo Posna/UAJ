@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace TrackerUAJ
 {
-    class Event2: TrackerEvent
+    public class CharacterSelectionEvent: TrackerEvent
     {
+        string name_;
+
         public override string toCSV()
         {
             int a = 0;
@@ -15,5 +17,11 @@ namespace TrackerUAJ
             return null;
         }
         public override string toJson() { return null; }
+
+        public CharacterSelectionEvent SetCharacterSelected(string name)
+        {
+            name_ = name;
+            return this;
+        }
     }
 }
