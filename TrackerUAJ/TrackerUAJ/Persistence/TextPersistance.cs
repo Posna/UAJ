@@ -28,18 +28,17 @@ namespace TrackerUAJ
         public void Flush()
         {
             //Mandar de la cola todos los eventos
-            foreach(TrackerEvent e in Tracker.GetInstance().eventQueue)
+            foreach(TrackerEvent e in Tracker.GetInstance().GetQueue())
             {
                 Send(e);
             }
 
-            Tracker.GetInstance().eventQueue.Clear();
+            Tracker.GetInstance().GetQueue().Clear();
         }
 
         //Enviaria un solo evento que entra como parametro
         public void Send(TrackerEvent e)
-        {
-            
+        {            
             StreamWriter writer;
             writer = new StreamWriter(_fileName, File.Exists(_fileName));
             writer.WriteLine(_serializer.Serialize(e));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace TrackerUAJ
 {
@@ -15,7 +16,11 @@ namespace TrackerUAJ
         EventFactory _factory;
         SerializeFactory _serializeFactory;
 
-        public Queue<TrackerEvent> eventQueue { get; set; }
+        Queue<TrackerEvent> _eventQueue;
+
+        Thread _thread;
+        bool _exit = false;
+        float _timeWaiting;
 
         // Valores iniciales
         int _idUser;
@@ -26,14 +31,27 @@ namespace TrackerUAJ
             _idUser = idUser;
             _serializeFactory = new SerializeFactory();
             _factory = new EventFactory();
-            eventQueue = new Queue<TrackerEvent>();
+            _eventQueue = new Queue<TrackerEvent>();
             _persistance = new List<IPersistence>();
         }
+
+        public void Init(int idUser, float time)
+        {
+            Init(idUser);
+            ThreadStart threadStart = new ThreadStart(ThreadLoop);
+            _timeWaiting = time;
+            _thread = new Thread(threadStart);
+            _thread.Start();
+        }
+
 
         public void AddPersistance(IPersistence per, TraceFormats format)
         {
             per.SetSerializer(_serializeFactory.create(format));
-            _persistance.Add(per);
+            lock (this)
+            {
+                _persistance.Add(per);
+            }
         }
 
         public static Tracker GetInstance()
@@ -51,7 +69,10 @@ namespace TrackerUAJ
             e.idUser = _idUser;
             foreach (var item in _persistance)
             {
-                item.Send(e);
+                lock (this)
+                {
+                    item.Send(e);
+                }
             }
         }
 
@@ -59,7 +80,22 @@ namespace TrackerUAJ
         {
             e.date = DateTime.Now;
             e.idUser = _idUser;
-            eventQueue.Enqueue(e);
+            _eventQueue.Enqueue(e);
+        }
+
+        private void ThreadLoop()
+        {
+            while (!_exit)
+            {
+                foreach (var item in _persistance)
+                {
+                    lock (this)
+                    {
+                        item.Flush();
+                    }
+                }
+                Thread.Sleep((int)(_timeWaiting*1000.0f));
+            }
         }
 
         public void Flush()
@@ -73,6 +109,8 @@ namespace TrackerUAJ
         //Finalizacion del tracker
         public void End()
         {
+            _exit = true;
+            _thread.Join();
             Flush();
         }
 
@@ -86,6 +124,7 @@ namespace TrackerUAJ
             return (CharacterSelectionEvent)_factory.create(TrackEventType.CharacterSelection);
         }
 
+        public Queue<TrackerEvent> GetQueue(){ return _eventQueue; }
 
     }
 }
