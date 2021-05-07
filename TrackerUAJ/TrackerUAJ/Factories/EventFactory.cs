@@ -9,13 +9,13 @@ namespace TrackerUAJ
 {
     public class EventFactory : IFactory<TrackerEvent>
     {
-        public TrackerEvent create (string name) 
+        public TrackerEvent create (Enum name) 
         {
             switch (name)
             {
-                case "EndEvent":
+                case TrackEventType.EndGame:
                     return new EndGameEvent();
-                case "CharacterEvent":
+                case TrackEventType.CharacterSelection:
                     return new CharacterSelectionEvent();
                    
             }

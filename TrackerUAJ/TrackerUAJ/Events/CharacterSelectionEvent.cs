@@ -8,7 +8,7 @@ namespace TrackerUAJ
 {
     public class CharacterSelectionEvent: TrackerEvent
     {
-        string name_;
+        public string name_;
 
         public override string toCSV()
         {

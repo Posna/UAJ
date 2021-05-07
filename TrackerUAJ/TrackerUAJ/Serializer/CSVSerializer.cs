@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace TrackerUAJ
 {
-    public interface IFactory<T>
+    class CSVSerializer: ISerializer
     {
-       T create(Enum name);
+        public string Serialize(TrackerEvent e)
+        {
+            return e.toCSV();
+        }
     }
 }

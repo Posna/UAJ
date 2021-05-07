@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TrackerUAJ
 {
+    [Serializable]
     public class EndGameEvent : TrackerEvent
     {
-        int _dmg;
-        int _idGame;
+        public int _dmg;
+        public int _idGame;
         public override string toCSV() {
             int a = 0;
             a += 3;
             return null;
         }
-        public override string toJson() { return null; }
+        public override string toJson()
+        {            
+            return JsonConvert.SerializeObject(this);
+        }
 
         public EndGameEvent SetDamage(int dmg)
         {
