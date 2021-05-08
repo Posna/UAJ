@@ -1,3 +1,6 @@
 [submodule "TeFeGe"]
 	path = TeFeGe
 	url = https://github.com/HoracioStudios/TeFeGe
+[submodule "UAJ-DebugTrackingServer"]
+	path = UAJ-DebugTrackingServer
+	url = https://github.com/gjimenezUCM/UAJ-DebugTrackingServer

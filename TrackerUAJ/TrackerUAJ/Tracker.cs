@@ -65,11 +65,11 @@ namespace TrackerUAJ
 
         public void SendEvent(TrackerEvent e)
         {
-            e.date = DateTime.Now;
-            e.idUser = _idUser;
-            foreach (var item in _persistance)
+            e._date = DateTime.Now;
+            e._idUser = _idUser;
+            lock (this)
             {
-                lock (this)
+                foreach (var item in _persistance)
                 {
                     item.Send(e);
                 }
@@ -78,8 +78,8 @@ namespace TrackerUAJ
 
         public void TrackEvent(TrackerEvent e)
         {
-            e.date = DateTime.Now;
-            e.idUser = _idUser;
+            e._date = DateTime.Now;
+            e._idUser = _idUser;
             _eventQueue.Enqueue(e);
         }
 
@@ -87,12 +87,9 @@ namespace TrackerUAJ
         {
             while (!_exit)
             {
-                foreach (var item in _persistance)
+                lock (this)
                 {
-                    lock (this)
-                    {
-                        item.Flush();
-                    }
+                    Flush();
                 }
                 Thread.Sleep((int)(_timeWaiting*1000.0f));
             }

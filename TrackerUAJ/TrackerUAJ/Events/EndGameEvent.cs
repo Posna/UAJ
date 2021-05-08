@@ -10,19 +10,32 @@ namespace TrackerUAJ
     [Serializable]
     public class EndGameEvent : TrackerEvent
     {
-        public int _dmg;
-        public int _idGame;
-        public override string toCSV() {
-            int a = 0;
-            a += 3;
-            return null;
+        [Serializable]
+        public struct Round
+        {
+            public float _timeRound;
+            public float _resulRound;
         }
+
+        public int _idGame;
+        public int _shots;
+        public float _dmg;
+        public string _player;
+        public string _rival;
+        public Round[] _rounds;
+
+        public EndGameEvent()
+        {
+            _rounds = new Round[3];
+        }
+
+        public override string toCSV() { return null; }
         public override string toJson()
         {            
             return JsonConvert.SerializeObject(this);
         }
 
-        public EndGameEvent SetDamage(int dmg)
+        public EndGameEvent SetDamage(float dmg)
         {
             _dmg = dmg;
             return this;
@@ -33,5 +46,35 @@ namespace TrackerUAJ
             _idGame = idGame;
             return this;
         }
+
+        public EndGameEvent SetShots(int shots)
+        {
+            _shots = shots;
+            return this;
+        }
+
+        public EndGameEvent SetPlayerName(string player)
+        {
+            _player = player;
+            return this;
+        }
+        public EndGameEvent SetRivalName(string rival)
+        {
+            _rival = rival;
+            return this;
+        }
+
+        public EndGameEvent SetTimeRound(float timeRound, int round)
+        {
+            _rounds[round]._timeRound = timeRound;
+            return this;
+        }
+
+        public EndGameEvent SetResultRound(float resultRound, int round)
+        {
+            _rounds[round]._resulRound = resultRound;
+            return this;
+        }
     }
+    
 }

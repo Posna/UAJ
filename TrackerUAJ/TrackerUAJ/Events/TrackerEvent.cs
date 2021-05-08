@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace TrackerUAJ
 {
@@ -13,8 +12,8 @@ namespace TrackerUAJ
     public class TrackerEvent
     {
         /*Atributos*/
-        public DateTime date { get; set; }
-        public int idUser { get; set; }
+        public DateTime _date { get; set; }
+        public int _idUser { get; set; }
 
 
         // Mete en CSV las variables comunes
