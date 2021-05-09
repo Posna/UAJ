@@ -8,16 +8,15 @@ using ServiceStack.Text;
 
 namespace TrackerUAJ
 {
-    public class CharacterSelectionEvent: TrackerEvent
+    public class TimeEvent : TrackerEvent
     {
-        public string _name;
-
-        public override string toCSV(){ return CsvSerializer.SerializeToCsv(new[] { this }); }
+        public string _eventName;
+        public override string toCSV() { return CsvSerializer.SerializeToCsv(new[] { this }); }
         public override string toJson() { return JsonConvert.SerializeObject(this); }
 
-        public CharacterSelectionEvent SetCharacterSelected(string name)
+        public TimeEvent SetEventName(string name)
         {
-            _name = name;
+            _eventName = name;
             return this;
         }
     }

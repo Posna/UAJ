@@ -17,7 +17,10 @@ namespace TrackerUAJ
                     return new EndGameEvent();
                 case TrackEventType.CharacterSelection:
                     return new CharacterSelectionEvent();
-                   
+                case TrackEventType.TimeEvent:
+                    return new TimeEvent();
+                case TrackEventType.EndSession:
+                    return new EndSessionEvent();
             }
 
             return new TrackerEvent();

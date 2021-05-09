@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TrackerUAJ
 {
-    enum TrackEventType{ EndGame, CharacterSelection }
+    enum TrackEventType{ EndGame, CharacterSelection, TimeEvent, EndSession }
 
     [Serializable]
     public class TrackerEvent

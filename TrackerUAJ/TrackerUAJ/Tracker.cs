@@ -18,7 +18,8 @@ namespace TrackerUAJ
 
         Queue<TrackerEvent> _eventQueue;
 
-        Thread _thread;
+        Thread _thread = null;
+        Thread _sendThread = null;
         bool _exit = false;
         float _timeWaiting;
 
@@ -38,9 +39,9 @@ namespace TrackerUAJ
         public void Init(int idUser, float time)
         {
             Init(idUser);
-            ThreadStart threadStart = new ThreadStart(ThreadLoop);
+            //ThreadStart threadStart = new ThreadStart(ThreadLoop);
             _timeWaiting = time;
-            _thread = new Thread(threadStart);
+            _thread = new Thread(() => ThreadLoop());
             _thread.Start();
         }
 
@@ -65,6 +66,13 @@ namespace TrackerUAJ
 
         public void SendEvent(TrackerEvent e)
         {
+            //ThreadStart thread = new ThreadStart(SendEvent);
+            _sendThread = new Thread(() => sendEvent(e));
+            _sendThread.Start();
+        }
+
+        private void sendEvent(TrackerEvent e)
+        {
             e._date = DateTime.Now;
             e._idUser = _idUser;
             lock (this)
@@ -87,19 +95,25 @@ namespace TrackerUAJ
         {
             while (!_exit)
             {
-                lock (this)
-                {
-                    Flush();
-                }
+                flush();
                 Thread.Sleep((int)(_timeWaiting*1000.0f));
             }
         }
 
         public void Flush()
         {
-            foreach (var item in _persistance)
+            _sendThread = new Thread(() => flush());
+            _sendThread.Start();
+        }
+
+        private void flush()
+        {
+            lock (this)
             {
-                item.Flush();
+                foreach (var item in _persistance)
+                {
+                    item.Flush();
+                }
             }
         }
 
@@ -107,8 +121,9 @@ namespace TrackerUAJ
         public void End()
         {
             _exit = true;
-            _thread.Join();
-            Flush();
+            if(_thread != null)
+                _thread.Join();
+            flush();
         }
 
         public EndGameEvent getEndGame()
@@ -119,6 +134,16 @@ namespace TrackerUAJ
         public CharacterSelectionEvent getCharacterSelectorEvent()
         {
             return (CharacterSelectionEvent)_factory.create(TrackEventType.CharacterSelection);
+        }
+
+        public TimeEvent getTimeEvent()
+        {
+            return (TimeEvent)_factory.create(TrackEventType.TimeEvent);
+        }
+
+        public EndSessionEvent getEndSessionEvent()
+        {
+            return (EndSessionEvent)_factory.create(TrackEventType.EndSession);
         }
 
         public Queue<TrackerEvent> GetQueue(){ return _eventQueue; }

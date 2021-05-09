@@ -8,17 +8,15 @@ using ServiceStack.Text;
 
 namespace TrackerUAJ
 {
-    public class CharacterSelectionEvent: TrackerEvent
+    public class EndSessionEvent:TrackerEvent
     {
-        public string _name;
-
-        public override string toCSV(){ return CsvSerializer.SerializeToCsv(new[] { this }); }
+        public DateTime _sessionStart;
+        public override string toCSV() { return CsvSerializer.SerializeToCsv(new[] { this }); }
         public override string toJson() { return JsonConvert.SerializeObject(this); }
 
-        public CharacterSelectionEvent SetCharacterSelected(string name)
+        public EndSessionEvent()
         {
-            _name = name;
-            return this;
+            _sessionStart = DateTime.Now;
         }
     }
 }
