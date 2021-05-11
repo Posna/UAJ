@@ -1,0 +1,10 @@
+https://github.com/Posna/UAJ
+
+En el repositorio de UAJ estan añadidos como submodulos el servidor que proporcionó Guillermo y 
+el juego en el que añadimos la telemetria.
+
+El codigo del sistema de telemetria se encuentra en este link: https://github.com/Posna/UAJ/tree/main/TrackerUAJ
+
+El ultimo commit del juego con la telemetria incorporada es este: https://github.com/HoracioStudios/TeFeGe/tree/ac364e55897f58e8431c3c95ea3146836a4e555d
+
+Link a TeFeGe (la telemetria esta implementada en la rama Telemetria): https://github.com/HoracioStudios/TeFeGe
