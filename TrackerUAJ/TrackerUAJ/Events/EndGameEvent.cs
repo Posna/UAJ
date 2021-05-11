@@ -31,13 +31,19 @@ namespace TrackerUAJ
             _rounds = new Round[3];
         }
 
-        public override string toCSV() { return CsvSerializer.SerializeToCsv(new[] { this }); }
-        public override string toJson()
+        public override string toJson(){ return JsonConvert.SerializeObject(this); }
+        public override string toCSV() { return null; }
+        public override string toXML()
         {
-            return JsonConvert.SerializeObject(this);
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new System.Xml.Serialization.XmlSerializer(this.GetType());
+                serializer.Serialize(stringwriter, this);
+                return stringwriter.ToString();
+            }
         }
 
-        
+
         public EndGameEvent SetIdGame(int idGame)
         {
             _idGame = idGame;

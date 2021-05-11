@@ -12,8 +12,10 @@ namespace TrackerUAJ
         {
             switch (name)
             {
-                case TrackEventType.CharacterSelection:
-                    return new JSONSerializer();
+                case TraceFormats.CSV:
+                    return new CSVSerializer();
+                case TraceFormats.XML:
+                    return new XMLSerializer();
                 case TraceFormats.JSON:
                 default:
                     return new JSONSerializer();

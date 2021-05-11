@@ -32,8 +32,6 @@ namespace TrackerUAJ
             {
                 Send(e);
             }
-
-            Tracker.GetInstance().GetQueue().Clear();
         }
 
         //Enviaria un solo evento que entra como parametro

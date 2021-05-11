@@ -2,7 +2,7 @@
 
 namespace TrackerUAJ
 {
-    public enum TraceFormats{ JSON, CSV }
+    public enum TraceFormats{ JSON, CSV, XML }
 
 	public interface ISerializer
 	{

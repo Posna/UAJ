@@ -11,8 +11,17 @@ namespace TrackerUAJ
     public class EndSessionEvent:TrackerEvent
     {
         public DateTime _sessionStart;
-        public override string toCSV() { return CsvSerializer.SerializeToCsv(new[] { this }); }
         public override string toJson() { return JsonConvert.SerializeObject(this); }
+        public override string toCSV() { return null; }
+        public override string toXML()
+        {
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new System.Xml.Serialization.XmlSerializer(this.GetType());
+                serializer.Serialize(stringwriter, this);
+                return stringwriter.ToString();
+            }
+        }
 
         public EndSessionEvent()
         {

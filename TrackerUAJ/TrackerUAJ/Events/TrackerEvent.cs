@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceStack.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,9 @@ namespace TrackerUAJ
         public int _idUser { get; set; }
 
 
-        // Mete en CSV las variables comunes
         public virtual string toCSV() { return null; }
         public virtual string toJson() { return null ; }
+        public virtual string toXML() { return null; }
+
     }
 }

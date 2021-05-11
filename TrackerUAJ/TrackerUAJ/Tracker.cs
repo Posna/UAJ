@@ -19,7 +19,6 @@ namespace TrackerUAJ
         Queue<TrackerEvent> _eventQueue;
 
         Thread _thread = null;
-        Thread _sendThread = null;
         bool _exit = false;
         float _timeWaiting;
 
@@ -67,11 +66,11 @@ namespace TrackerUAJ
         public void SendEvent(TrackerEvent e)
         {
             //ThreadStart thread = new ThreadStart(SendEvent);
-            _sendThread = new Thread(() => sendEvent(e));
-            _sendThread.Start();
+            Thread _newThread = new Thread(() => sendEvent(e));
+            _newThread.Start();
         }
 
-        private void sendEvent(TrackerEvent e)
+        public  void sendEvent(TrackerEvent e)
         {
             e._date = DateTime.Now;
             e._idUser = _idUser;
@@ -88,7 +87,10 @@ namespace TrackerUAJ
         {
             e._date = DateTime.Now;
             e._idUser = _idUser;
-            _eventQueue.Enqueue(e);
+            lock (this)
+            {
+                _eventQueue.Enqueue(e);
+            }
         }
 
         private void ThreadLoop()
@@ -102,11 +104,11 @@ namespace TrackerUAJ
 
         public void Flush()
         {
-            _sendThread = new Thread(() => flush());
-            _sendThread.Start();
+            Thread _newThread = new Thread(() => flush());
+            _newThread.Start();
         }
 
-        private void flush()
+        public void flush()
         {
             lock (this)
             {
@@ -114,6 +116,7 @@ namespace TrackerUAJ
                 {
                     item.Flush();
                 }
+                _eventQueue.Clear();
             }
         }
 

@@ -24,8 +24,6 @@ namespace TrackerUAJ
             {
                 Send(e);
             }
-
-            Tracker.GetInstance().GetQueue().Clear();
         }
 
         public void Send(TrackerEvent e)

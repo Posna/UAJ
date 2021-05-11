@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace TrackerUAJ
 {
-    //Sin implementar en los eventos
-    class CSVSerializer: ISerializer
+    class XMLSerializer : ISerializer
     {
         public string Serialize(TrackerEvent e)
         {
-            return e.toCSV();
+            return e.toXML();
         }
     }
 }
