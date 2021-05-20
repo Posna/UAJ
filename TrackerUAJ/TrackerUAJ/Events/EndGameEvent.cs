@@ -20,6 +20,7 @@ namespace TrackerUAJ
 
         public int _idGame;
         public int _shots;
+        public float _accuracy;
         public float _dmg;
         public float _totalGameTime;
         public string _player;
@@ -58,6 +59,12 @@ namespace TrackerUAJ
         public EndGameEvent SetDamage(float dmg)
         {
             _dmg = dmg;
+            return this;
+        }
+
+        public EndGameEvent SetAccuracy(float accuracy)
+        {
+            _accuracy = accuracy;
             return this;
         }
 
